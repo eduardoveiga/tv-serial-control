@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -20,6 +21,8 @@ func main() {
 		if err != nil {
 			return err
 		}
+
+		fmt.Println(d.AvailableCommands())
 
 		var req struct {
 			Args []interface{} `json:"args,omitempty"`

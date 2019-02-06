@@ -26,7 +26,13 @@ func (l *LG) Initialize(device string) error {
 }
 
 func (l *LG) AvailableCommands() []string {
-	return []string{}
+	keys := make([]string, 0, len(cmds))
+
+	for cmd := range cmds {
+		keys = append(keys, string(cmd))
+	}
+
+	return keys
 }
 
 func (l *LG) SendCommand(name string, args ...interface{}) (map[string]interface{}, error) {
