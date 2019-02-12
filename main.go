@@ -7,19 +7,21 @@ import (
 	"os"
 
 	"github.com/gustavosbarreto/tv-control/driverapi"
+	_ "github.com/gustavosbarreto/tv-control/drivers/dummy"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
 )
 
 type ConfigOptions struct {
-	Driver string `envconfig:"driver" required:"true"`
-	Device string `envconfig:"device" required:"true"`
+	Driver string `envconfig:"driver" required:"true" default:"dummy"`
+	Device string `envconfig:"device" required:"true" default:"/dev/null"`
 	Port   int    `envconfig:"port" default:"8080"`
 }
 
 func main() {
 	e := echo.New()
+	e.HideBanner = true
 
 	opts := ConfigOptions{}
 
@@ -42,6 +44,7 @@ func main() {
 
 	logrus.WithFields(logrus.Fields{
 		"driver":   opts.Driver,
+		"device":   opts.Device,
 		"commands": driver.AvailableCommands(),
 	}).Info("Driver loaded")
 
