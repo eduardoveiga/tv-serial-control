@@ -1,28 +1,37 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/gustavosbarreto/tv-control/lg"
+	"github.com/gustavosbarreto/tv-control/driverapi"
+	_ "github.com/gustavosbarreto/tv-control/drivers/lg"
 	"github.com/labstack/echo"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	e := echo.New()
 
-	e.POST("/:cmd", func(c echo.Context) error {
+	driver := driverapi.GetDriver("lg")
+	if driver == nil {
+		logrus.Panic("Driver not found")
+	}
+
+	if err := driver.Initialize(os.Args[1]); err != nil {
+		logrus.WithFields(logrus.Fields{
+			"err": err,
+		}).Panic("Failed to initialize driver")
+	}
+
+	logrus.WithFields(logrus.Fields{
+		"driver":   "lg",
+		"commands": driver.AvailableCommands(),
+	}).Info("Driver loaded")
+
+	e.POST("/commands/:cmd", func(c echo.Context) error {
 		cmd := c.Param("cmd")
-
-		d := lg.LG{}
-		err := d.Initialize(os.Args[1])
-		if err != nil {
-			return err
-		}
-
-		fmt.Println(d.AvailableCommands())
 
 		var req struct {
 			Args []interface{} `json:"args,omitempty"`
@@ -35,7 +44,7 @@ func main() {
 			}
 		}
 
-		res, err := d.SendCommand(cmd, req.Args...)
+		res, err := driver.SendCommand(cmd, req.Args...)
 		if err != nil {
 			return err
 		}

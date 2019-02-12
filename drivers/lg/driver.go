@@ -3,14 +3,19 @@ package lg
 import (
 	"time"
 
+	"github.com/gustavosbarreto/tv-control/driverapi"
 	"github.com/tarm/serial"
 )
 
-type LG struct {
+func init() {
+	driverapi.RegisterDriver("lg", &driver{})
+}
+
+type driver struct {
 	port *serial.Port
 }
 
-func (l *LG) Initialize(device string) error {
+func (l *driver) Initialize(device string) error {
 	port, err := serial.OpenPort(&serial.Config{
 		Name:        device,
 		Baud:        9600,
@@ -25,7 +30,7 @@ func (l *LG) Initialize(device string) error {
 	return err
 }
 
-func (l *LG) AvailableCommands() []string {
+func (l *driver) AvailableCommands() []string {
 	keys := make([]string, 0, len(cmds))
 
 	for cmd := range cmds {
@@ -35,7 +40,7 @@ func (l *LG) AvailableCommands() []string {
 	return keys
 }
 
-func (l *LG) SendCommand(name string, args ...interface{}) (map[string]interface{}, error) {
+func (l *driver) SendCommand(name string, args ...interface{}) (map[string]interface{}, error) {
 	if _, ok := cmds[Command(name)]; ok {
 		res, err := Command(name).Send(l.port, args...)
 		if err != nil {
