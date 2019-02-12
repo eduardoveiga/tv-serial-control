@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2019
+ * O.S. Systems Sofware LTDA: contato@ossystems.com.br
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 package driverapi
 
 var drivers = make(map[string]Driver)
