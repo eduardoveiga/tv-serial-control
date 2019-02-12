@@ -10,7 +10,7 @@ package lg
 import (
 	"time"
 
-	"github.com/gustavosbarreto/tv-control/driverapi"
+	"github.com/OSSystems/tv-serial-control/driverapi"
 	"github.com/tarm/serial"
 )
 

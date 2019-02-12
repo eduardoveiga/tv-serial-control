@@ -13,8 +13,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/gustavosbarreto/tv-control/driverapi"
-	_ "github.com/gustavosbarreto/tv-control/drivers/dummy"
+	"github.com/OSSystems/tv-serial-control/driverapi"
+	_ "github.com/OSSystems/tv-serial-control/drivers/dummy"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"

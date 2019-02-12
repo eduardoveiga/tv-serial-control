@@ -2,4 +2,4 @@
 
 package main
 
-import _ "github.com/gustavosbarreto/tv-control/drivers/lg"
+import _ "github.com/OSSystems/tv-serial-control/drivers/lg"

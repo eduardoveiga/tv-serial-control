@@ -7,9 +7,7 @@
 
 package dummy
 
-import (
-	"github.com/gustavosbarreto/tv-control/driverapi"
-)
+import "github.com/OSSystems/tv-serial-control/driverapi"
 
 func init() {
 	driverapi.RegisterDriver("dummy", &driver{})
