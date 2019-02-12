@@ -1,10 +1,14 @@
-# Configuration
+# tv-serial-control
+
+Control TV Monitor via serial port
+
+## Configuration
 
 * `DRIVER` driver name
 * `DEVICE` device
 * `PORT` listen port
 
-# Available Drivers
+## Available Drivers
 
 * `dummy` Default dummy driver
 * `lg` LG monitors
@@ -12,9 +16,9 @@
 > The dummy driver is available by default. To enable other supported driver
 > pass the driver name as build tag to the build system.
 
-# Endpoints
+## Endpoints
 
-## `GET /driver`
+### `GET /driver`
 
 Get driver info.
 
@@ -31,15 +35,15 @@ Response:
 }
 ```
 
-## `POST /commands/:cmd`
+### `POST /commands/:cmd`
 
 Send command `cmd`
 
-# License
+## License
 
 Licensed under MIT, ([LICENSE](LICENSE) or https://opensource.org/licenses/MIT).
 
-# Contribution
+## Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally
 submitted for inclusion in the work by you, as defined in the MIT
