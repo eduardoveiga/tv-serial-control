@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/gustavosbarreto/tv-control/driverapi"
-	_ "github.com/gustavosbarreto/tv-control/drivers/lg"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
