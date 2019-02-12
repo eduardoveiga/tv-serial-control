@@ -1,39 +1,55 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/gustavosbarreto/tv-control/driverapi"
 	_ "github.com/gustavosbarreto/tv-control/drivers/lg"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
 )
 
+type ConfigOptions struct {
+	Driver string `envconfig:"driver" required:"true"`
+	Device string `envconfig:"device" required:"true"`
+	Port   int    `envconfig:"port" default:"8080"`
+}
+
 func main() {
 	e := echo.New()
 
-	driver := driverapi.GetDriver("lg")
+	opts := ConfigOptions{}
+
+	err := envconfig.Process("", &opts)
+	if err != nil {
+		logrus.Error(err)
+		os.Exit(1)
+	}
+
+	driver := driverapi.GetDriver(opts.Driver)
 	if driver == nil {
 		logrus.Panic("Driver not found")
 	}
 
-	if err := driver.Initialize(os.Args[1]); err != nil {
+	if err := driver.Initialize(opts.Device); err != nil {
 		logrus.WithFields(logrus.Fields{
 			"err": err,
 		}).Panic("Failed to initialize driver")
 	}
 
 	logrus.WithFields(logrus.Fields{
-		"driver":   "lg",
+		"driver":   opts.Driver,
 		"commands": driver.AvailableCommands(),
 	}).Info("Driver loaded")
 
 	e.GET("/driver", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, echo.Map{
-			"driver":   "lg",
-			"device":   os.Args[1],
+			"driver":   opts.Driver,
+			"device":   opts.Device,
 			"commands": driver.AvailableCommands(),
 		})
 	})
@@ -60,5 +76,5 @@ func main() {
 		return c.JSON(http.StatusOK, res)
 	})
 
-	log.Fatal(e.Start(":8080"))
+	log.Fatal(e.Start(fmt.Sprintf(":%d", opts.Port)))
 }
