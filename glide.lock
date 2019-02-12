@@ -1,0 +1,38 @@
+hash: 4bccf7f907fa938e73f704f653f4a3d11cac222d49231b29ef0f2c235da383bb
+updated: 2019-02-12T14:06:32.341124451-02:00
+imports:
+- name: github.com/kelseyhightower/envconfig
+  version: f611eb38b3875cc3bd991ca91c51d06446afa14c
+- name: github.com/konsorten/go-windows-terminal-sequences
+  version: 5c8c8bd35d3832f5d134ae1e1e375b69a4d25242
+- name: github.com/labstack/echo
+  version: 6d9e043284aea2d07f5fcaf0d3a424eb7d9f6109
+- name: github.com/labstack/gommon
+  version: 2a618302b929cc20862dda3aa6f02f64dbe740dd
+  subpackages:
+  - color
+  - log
+- name: github.com/mattn/go-colorable
+  version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
+- name: github.com/mattn/go-isatty
+  version: 3fb116b820352b7f0c281308a4d6250c22d94e27
+- name: github.com/sirupsen/logrus
+  version: e1e72e9de974bd926e5c56f83753fba2df402ce5
+- name: github.com/tarm/serial
+  version: 98f6abe2eb07edd42f6dfa2a934aea469acc29b7
+- name: github.com/valyala/bytebufferpool
+  version: cdfbe9377474227bb42120c1e22fd4433e7f69bf
+- name: github.com/valyala/fasttemplate
+  version: dcecefd839c4193db0d35b88ec65b4c12d360ab0
+- name: golang.org/x/crypto
+  version: 0c41d7ab0a0ee717d4590a44bcb987dfd9e183eb
+  subpackages:
+  - acme
+  - acme/autocert
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: fa43e7bc11baaae89f3f902b2b4d832b68234844
+  subpackages:
+  - unix
+  - windows
+testImports: []
