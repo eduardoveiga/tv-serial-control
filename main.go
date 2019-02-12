@@ -30,6 +30,14 @@ func main() {
 		"commands": driver.AvailableCommands(),
 	}).Info("Driver loaded")
 
+	e.GET("/driver", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, echo.Map{
+			"driver":   "lg",
+			"device":   os.Args[1],
+			"commands": driver.AvailableCommands(),
+		})
+	})
+
 	e.POST("/commands/:cmd", func(c echo.Context) error {
 		cmd := c.Param("cmd")
 
