@@ -79,6 +79,10 @@ func main() {
 
 		res, err := driver.SendCommand(cmd, req.Args...)
 		if err != nil {
+			logrus.WithFields(logrus.Fields{
+				"cmd":  cmd,
+				"args": req.Args,
+			}).Error(err)
 			return err
 		}
 
