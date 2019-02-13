@@ -7,7 +7,13 @@
 
 package dummy
 
-import "github.com/OSSystems/tv-serial-control/driverapi"
+import (
+	"errors"
+
+	"github.com/OSSystems/tv-serial-control/driverapi"
+)
+
+var ErrCommandNotFound = errors.New("Command not found")
 
 func init() {
 	driverapi.RegisterDriver("dummy", &driver{})
@@ -21,9 +27,18 @@ func (d *driver) Initialize(device string) error {
 }
 
 func (l *driver) AvailableCommands() []string {
-	return []string{}
+	return []string{"echo"}
 }
 
 func (l *driver) SendCommand(name string, args ...interface{}) (map[string]interface{}, error) {
-	return nil, nil
+	for _, cmd := range l.AvailableCommands() {
+		if cmd == name {
+			return map[string]interface{}{
+				"command": name,
+				"args":    args,
+			}, nil
+		}
+	}
+
+	return nil, ErrCommandNotFound
 }
