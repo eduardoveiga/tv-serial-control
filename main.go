@@ -29,6 +29,7 @@ type ConfigOptions struct {
 func main() {
 	e := echo.New()
 	e.HideBanner = true
+	var tv = driverapi.TV{Data: make(map[string]int64)}
 
 	opts := ConfigOptions{}
 
@@ -77,7 +78,7 @@ func main() {
 			}
 		}
 
-		res, err := driver.SendCommand(cmd, req.Args...)
+		res, err := driver.SendCommand(cmd, &tv, req.Args...)
 		if err != nil {
 			logrus.WithFields(logrus.Fields{
 				"cmd":  cmd,

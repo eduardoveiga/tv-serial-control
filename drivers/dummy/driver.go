@@ -17,28 +17,47 @@ var ErrCommandNotFound = errors.New("Command not found")
 
 func init() {
 	driverapi.RegisterDriver("dummy", &driver{})
+
 }
 
 type driver struct {
+}
+
+type TV struct {
 }
 
 func (d *driver) Initialize(device string) error {
 	return nil
 }
 
-func (l *driver) AvailableCommands() []string {
-	return []string{"echo"}
+func (d *driver) AvailableCommands() []string {
+	keys := make([]string, 0, len(cmds))
+
+	for cmd := range cmds {
+		keys = append(keys, string(cmd))
+	}
+
+	return keys
+
 }
 
-func (l *driver) SendCommand(name string, args ...interface{}) (map[string]interface{}, error) {
-	for _, cmd := range l.AvailableCommands() {
+
+
+func (d *driver) SendCommand(name string, tv *driverapi.TV, args ...interface{}) (map[string]interface{}, error) {
+	for _, cmd := range d.AvailableCommands() {
 		if cmd == name {
-			return map[string]interface{}{
-				"command": name,
-				"args":    args,
-			}, nil
+
+
+			res, err := Command(name).Send(tv, args...)
+			if err != nil {
+				return nil, err
+			}
+
+			return res, nil
+
 		}
 	}
 
 	return nil, ErrCommandNotFound
 }
+

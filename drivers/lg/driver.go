@@ -47,7 +47,7 @@ func (l *driver) AvailableCommands() []string {
 	return keys
 }
 
-func (l *driver) SendCommand(name string, args ...interface{}) (map[string]interface{}, error) {
+func (l *driver) SendCommand(name string, tv *driverapi.TV, args ...interface{}) (map[string]interface{}, error) {
 	if _, ok := cmds[Command(name)]; ok {
 		res, err := Command(name).Send(l.port, args...)
 		if err != nil {
