@@ -65,7 +65,7 @@ func (c Command) Send(port *serial.Port, args ...interface{}) (map[string]interf
 		buf.WriteString(string(c[:n]))
 	}
 
-	re, err := regexp.Compile(`(\w) (\d+) (OK|NG)(\d+)x`)
+	re, err := regexp.Compile(`(\w) ([0-9a-fA-F]{2}) (OK|NG)([0-9a-fA-F]{2})x`)
 	if err != nil {
 		return nil, err
 	}
@@ -87,12 +87,12 @@ func (c Command) Send(port *serial.Port, args ...interface{}) (map[string]interf
 		return nil, InvalidResponseErr
 	}
 
-	id, err := strconv.Atoi(result[0][2])
+	id, err := strconv.ParseInt(result[0][2], 16, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	data, err := strconv.Atoi(result[0][4])
+	data, err := strconv.ParseInt(result[0][4], 16, 0)
 	if err != nil {
 		return nil, err
 	}
