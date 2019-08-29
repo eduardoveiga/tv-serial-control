@@ -27,6 +27,18 @@ var cmds = map[Command]string{
 	PowerStatusCmd: "ka 00 ff",
 	VolumeGetCmd:   "kf 00 ff",
 	VolumeSetCmd:   "kf 00 %g",
+	KeyHome:        "mc 00 7c",
+	KeyUp:          "mc 00 40",
+	KeyLeft:        "mc 00 07",
+	KeyEnter:       "mc 00 7c",
+	KeyRight:       "mc 00 06",
+	KeyDown:        "mc 00 31",
+	KeyEsc:         "mc 00 1b",
+	KeyA:           "mc 00 41",
+	KeyZ:           "mc 00 5a",
+	KeyR:           "mc 00 52",
+	KeyVolUp:       "mc 00 02",
+	keyVolDown:     "mc 00 03",
 }
 
 const (
@@ -35,6 +47,18 @@ const (
 	PowerStatusCmd Command = "power_status"
 	VolumeGetCmd   Command = "volume_get"
 	VolumeSetCmd   Command = "volume_set"
+	KeyHome        Command = "key_home"
+	KeyUp          Command = "key_up"
+	KeyLeft        Command = "key_left"
+	KeyEnter       Command = "key_enter"
+	KeyRight       Command = "key_right"
+	KeyDown        Command = "key_down"
+	KeyEsc         Command = "key_esc"
+	KeyA           Command = "key_a"
+	KeyZ           Command = "key_z"
+	KeyR           Command = "key_r"
+	KeyVolUp       Command = "volume_up"
+	keyVolDown     Command = "volume_down"
 )
 
 var (
@@ -65,7 +89,7 @@ func (c Command) Send(port *serial.Port, args ...interface{}) (map[string]interf
 		buf.WriteString(string(c[:n]))
 	}
 
-	re, err := regexp.Compile(`(\w) (\d+) (OK|NG)(\d+)x`)
+	re, err := regexp.Compile(`(\w) ([0-9a-fA-F]{2}) (OK|NG)([0-9a-fA-F]{2})x`)
 	if err != nil {
 		return nil, err
 	}
@@ -87,12 +111,12 @@ func (c Command) Send(port *serial.Port, args ...interface{}) (map[string]interf
 		return nil, InvalidResponseErr
 	}
 
-	id, err := strconv.Atoi(result[0][2])
+	id, err := strconv.ParseInt(result[0][2], 16, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	data, err := strconv.Atoi(result[0][4])
+	data, err := strconv.ParseInt(result[0][4], 16, 0)
 	if err != nil {
 		return nil, err
 	}
