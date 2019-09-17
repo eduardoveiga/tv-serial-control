@@ -64,7 +64,9 @@ var (
 
 func (c Command) Send(tv *driverapi.TV, args ...interface{}) (map[string]interface{}, error) {
 
-	command_string := fmt.Sprintf(string(cmds[c]) + "\r")
+	command_string := fmt.Sprintf(string(cmds[c])+"\r", args...)
+
+	fmt.Printf(command_string)
 
 	time.Sleep(time.Second)
 
