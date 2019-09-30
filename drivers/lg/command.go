@@ -26,7 +26,7 @@ var cmds = map[Command]string{
 	PowerOffCmd:    "ka 00 00",
 	PowerStatusCmd: "ka 00 ff",
 	VolumeGetCmd:   "kf 00 ff",
-	VolumeSetCmd:   "kf 00 %g",
+	VolumeSetCmd:   "kf 00 %s",
 	KeyHome:        "mc 00 7c",
 	KeyUp:          "mc 00 40",
 	KeyLeft:        "mc 00 07",
