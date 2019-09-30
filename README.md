@@ -64,7 +64,7 @@ Send command `cmd`
   power_off:       "ka 00 00"
   power_status:    "ka 00 ff"
   volume_get:      "kf 00 ff"
-  volume_set:      "kf 00 %g"
+  volume_set:      "kf 00 VAL"
   key_home:        "mc 00 7c"
   key_up:          "mc 00 40"
   ley_left:        "mc 00 07"
@@ -78,10 +78,10 @@ Send command `cmd`
   volume_up:       "mc 00 02"
   volume_down:     "mc 00 03"
 ```
-where  ` %g `  is  a numeric value from 00 to 64 sent as a parameter"
+where  ` VAL`  is  a numeric value from 00 to 64 sent as a  string parameter"
 
 #### Example with curl
-```curl  -X POST -H "Content-Type: application/json" -d '{"args":[64]}'   "http://localhost:8080/commands/volume_set"```
+```curl  -X POST -H "Content-Type: application/json" -d '{"args":["64"]}'   "http://localhost:8080/commands/volume_set"```
    
 
 ## License
