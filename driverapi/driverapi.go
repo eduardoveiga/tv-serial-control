@@ -11,6 +11,7 @@ var drivers = make(map[string]Driver)
 
 type Driver interface {
 	Initialize(name string) error
+	InitializeDevice() (map[string]interface{}, error)
 	AvailableCommands() []string
 	SendCommand(name string, args ...interface{}) (map[string]interface{}, error)
 }
