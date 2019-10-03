@@ -65,6 +65,8 @@ Send command `cmd`
   power_status:    "ka 00 ff"
   volume_get:      "kf 00 ff"
   volume_set:      "kf 00 VAL"
+  volume_mute_on:  "ke 00 00"
+  volume_mute_off: "ke 00 01"
   key_home:        "mc 00 7c"
   key_up:          "mc 00 40"
   ley_left:        "mc 00 07"
