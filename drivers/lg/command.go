@@ -27,6 +27,8 @@ var cmds = map[Command]string{
 	PowerStatusCmd: "ka 00 ff",
 	VolumeGetCmd:   "kf 00 ff",
 	VolumeSetCmd:   "kf 00 %s",
+	MuteOnCmd:      "ke 00 00",
+	MuteOffCmd:     "ke 00 01",
 	KeyHome:        "mc 00 7c",
 	KeyUp:          "mc 00 40",
 	KeyLeft:        "mc 00 07",
@@ -47,6 +49,8 @@ const (
 	PowerStatusCmd Command = "power_status"
 	VolumeGetCmd   Command = "volume_get"
 	VolumeSetCmd   Command = "volume_set"
+	MuteOnCmd      Command = "volume_mute_on"
+	MuteOffCmd     Command = "volume_mute_off"
 	KeyHome        Command = "key_home"
 	KeyUp          Command = "key_up"
 	KeyLeft        Command = "key_left"
